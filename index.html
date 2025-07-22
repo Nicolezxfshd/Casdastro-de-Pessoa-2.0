@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastramento e exclusão de clientes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+    <h1>Cadastramento e exclusão de clientes</h1> 
+    <form id="formCliente" style="display: flex; gap: 8px; margin-bottom: 16px; align-items: center;">
+        <input type="text" id="nome" name="nome" placeholder="Nome" required style="width: 120px;">
+        <input type="email" id="email" name="email" placeholder="Email" required style="width: 160px;">
+        <button type="submit" style="padding: 6px 16px;">Adicionar</button>
+    </form>
+    <ul id="clientes">
+        <!-- Lista de clientes será inserida aqui pelo JavaScript -->
+    </ul>
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/utils.js"></script>
+</body>
+</html>
