@@ -1,23 +1,20 @@
-import { Cliente, ListaDeClientes } from "./classes.js";
-import { validarEmail, validarNome } from "./utils.js";
 
-const listaClientes = document.getElementById("clientes");
-const form = document.getElementById("formCliente");
-const nomeInput = document.getElementById("nome");
-const emailInput = document.getElementById("email");
 
-const lista = new ListaDeClientes();
+import { Cliente, API_URL, listaClientes, form, nomeInput, emailInput } from "./classes.js";
+import { validarEmail, validarNome, cadastrarClienteAPI, listarClientesAPI, removerClienteAPI } from "./utils.js";
 
-function renderizarLista() {
+
+async function renderizarLista() {
+    const clientes = await listarClientesAPI(API_URL);
     listaClientes.innerHTML = "";
-    lista.listar().map((cliente, idx) => {
+    clientes.map((cliente) => {
         const item = document.createElement("li");
-        item.innerHTML = `${cliente.nome} - ${cliente.email} <button data-idx="${idx}">Remover</button>`;
+        item.innerHTML = `${cliente.nome} - ${cliente.email} <button data-id="${cliente._id}">Remover</button>`;
         listaClientes.appendChild(item);
     });
 }
 
-form.addEventListener("submit", function(e) {
+form.addEventListener("submit", async function(e) {
     e.preventDefault();
     const nome = nomeInput.value.trim();
     const email = emailInput.value.trim();
@@ -29,20 +26,22 @@ form.addEventListener("submit", function(e) {
         alert("Digite um email válido.");
         return;
     }
-    if (lista.buscarPorEmail(email)) {
+    // Verifica se já existe email cadastrado na API
+    const clientes = await listarClientesAPI(API_URL);
+    if (clientes.find(c => c.email === email)) {
         alert("Email já cadastrado!");
         return;
     }
-    lista.adicionar(new Cliente(nome, email));
+    await cadastrarClienteAPI(API_URL, new Cliente(nome, email));
     nomeInput.value = "";
     emailInput.value = "";
     renderizarLista();
 });
 
-listaClientes.addEventListener("click", function(e) {
+listaClientes.addEventListener("click", async function(e) {
     if (e.target.tagName === "BUTTON") {
-        const idx = e.target.getAttribute("data-idx");
-        lista.removerPorIndice(idx);
+        const id = e.target.getAttribute("data-id");
+        await removerClienteAPI(API_URL, id);
         renderizarLista();
     }
 });
