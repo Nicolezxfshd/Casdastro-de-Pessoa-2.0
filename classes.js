@@ -1,5 +1,5 @@
-// Classes corretas para clientes
-export const API_URL = "https://crudcrud.com/api/01c2abd8965e49e5bbe7844a09689ac7/clientes";
+// classes.js
+export const API_URL = "https://crudcrud.com/api/45bc44833a454cfba28bb64b94ebea97/clientes";
 export const listaClientes = document.getElementById("clientes");
 export const form = document.getElementById("formCliente");
 export const nomeInput = document.getElementById("nome");
